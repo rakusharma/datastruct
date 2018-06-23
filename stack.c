@@ -1,11 +1,14 @@
 #include<stdio.h>
 #include<string.h>
+#include"stack.h"
 
-/*stack*/
+/*
+*stack*
 struct  elem {
         void *e;
         struct elem *next;
 };
+*/
 
 void push(void *item, struct elem **elem)
 {
@@ -45,7 +48,7 @@ void printstack(struct elem *stack)
 }
 
 
-int main()
+int teststack()
 {
 	struct elem *stack = NULL, *t;
 	int i = 110, j  = 10;
@@ -61,5 +64,7 @@ int main()
 	printf("pop elem %4p %4d\n", t->e, *(int*)(t->e));
 	t = pop(&stack);
 	printf("pop elem %4p\n", t);
+
+	return 1;
 
 }
