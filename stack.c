@@ -2,24 +2,13 @@
 #include<string.h>
 #include"stack.h"
 
-/*
-*stack*
-struct  elem {
-        void *e;
-        struct elem *next;
-};
-*/
-
 void push(void **item, struct elem **elem)
 {
         struct elem *t;
 
-
-
         t = (struct elem*)malloc(sizeof(struct elem));
         t->e = *item;
         t->next = *elem;
-
 	*elem = t;
 	
 
@@ -27,13 +16,11 @@ void push(void **item, struct elem **elem)
 void *pope(struct elem **stack)
 {
 	void *t;
-	
+
 	if (*stack == NULL) return NULL;
 
 	t = (*stack)->e;
-
 	*stack = (*stack)->next;
-
 	return t;
 
 }
@@ -42,11 +29,9 @@ struct elem *pop(struct elem **stack)
 {
 	struct elem *t;
 
-	
 	if (*stack == NULL) return NULL;
 
 	t = *stack;
-
 	*stack = (*stack)->next;
 
 	return t;
@@ -75,10 +60,8 @@ int teststack()
 	printstack(stack);
 	
 	t = pop(&stack);
-	//printf("pop elem %4p %4d\n", t->e, *(int*)(t->e));
 	printf("pop elem %4p\n", t->e);
 	t = pop(&stack);
-	//printf("pop elem %4p %4d\n", t->e, *(int*)(t->e));
 	t = pop(&stack);
 	printf("pop elem %4p\n", t);
 
