@@ -22,11 +22,9 @@ void *pope(struct elem **stack)
 struct elem *pop(struct elem **stack)
 {
 	struct elem *t;
-
 	if (*stack == NULL) return NULL;
 	t = *stack;
 	*stack = (*stack)->next;
-
 	return t;
 }
 
