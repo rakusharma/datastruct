@@ -27,6 +27,27 @@ void deltree(struct node *t)
 	temp = t;
 }
 
+void preordtraverse(struct node *root)
+{
+	struct elem *stack = NULL;
+	while (1) {
+
+	while (root) {
+		printf(" %4d \n", root->data);
+		push(&root, &stack);
+		root = root->l;
+	}
+
+	if (stack == NULL) 
+		break;
+
+	root =  (struct node*)pope(&stack);
+	root = root->r;
+	}
+
+
+}
+
 int main()
 {
 	struct node *tree;
@@ -40,6 +61,8 @@ int main()
 	tree->r->l = addnode(6);
 	tree->r->r = addnode(7);
 
-	teststack();
+	preordtraverse(tree);
+
+	//teststack();
 }
 
