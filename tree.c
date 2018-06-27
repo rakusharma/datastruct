@@ -27,6 +27,54 @@ void deltree(struct node *t)
 	temp = t;
 }
 
+
+/*LRD*/
+void postordertraverse(struct node *root)
+{
+	struct elem *stack = NULL;
+	struct node *prev = NULL;
+
+	do{
+
+		while(root) {
+			push(&root, &stack);
+			root = root->l;
+		}
+		while (root == NULL && stack){
+			root = stack->e;
+			if(root->r == NULL || root->r == prev) {
+				printf("%4d",root->data);
+				pope(&stack);
+				prev = root;
+				root = NULL;
+			} else {
+				root = root->r;
+			}
+		}
+
+
+	}while (stack);
+
+
+
+}
+
+/*LDR traversal*/
+void inordertraverse(struct node *root)
+{
+	struct elem *stack = NULL;
+	while (1) {
+		while (root) {
+			push(&root, &stack);
+			root = root->l;
+		}
+		if (stack == NULL) break;
+		root = pope(&stack);
+		printf(" %4d \n", root->data);
+		root = root->r;
+	}
+}
+/*DLR*/
 void preordtraverse(struct node *root)
 {
 	struct elem *stack = NULL;
@@ -61,8 +109,9 @@ int main()
 	tree->r->l = addnode(6);
 	tree->r->r = addnode(7);
 
-	preordtraverse(tree);
-
+	//preordtraverse(tree);
+	//inordertraverse(tree);
+	postordertraverse(tree);
 	//teststack();
 }
 
