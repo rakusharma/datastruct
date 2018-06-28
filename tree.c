@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include"stack.h"
+#include"queue.h"
 
 
 struct node {
@@ -20,13 +21,31 @@ struct node *addnode(int data)
 	return new;
 }
 
-void deltree(struct node *t)
+void deltree(struct node *root)
 {
-	struct node *temp;
 
-	temp = t;
 }
 
+
+void levelordertraverse(struct node *root)
+{
+	struct queue *q;
+
+	initq(&q);
+
+	enq(&q, &root);
+
+	while (!emptyq(q)) {
+		root = dequ(&q);
+		printf("%4d",root->data);
+		if(root->l) {
+			enq(&q, &(root->l));
+		}
+		if(root->l) {
+			enq(&q, &(root->r));
+		}
+	}
+}
 
 /*LRD*/
 void postordertraverse(struct node *root)
@@ -54,9 +73,6 @@ void postordertraverse(struct node *root)
 
 
 	}while (stack);
-
-
-
 }
 
 /*LDR traversal*/
@@ -80,17 +96,17 @@ void preordtraverse(struct node *root)
 	struct elem *stack = NULL;
 	while (1) {
 
-	while (root) {
-		printf(" %4d \n", root->data);
-		push(&root, &stack);
-		root = root->l;
-	}
+		while (root) {
+			printf(" %4d \n", root->data);
+			push(&root, &stack);
+			root = root->l;
+		}
 
-	if (stack == NULL) 
-		break;
+		if (stack == NULL) 
+			break;
 
-	root =  (struct node*)pope(&stack);
-	root = root->r;
+		root =  (struct node*)pope(&stack);
+		root = root->r;
 	}
 
 
@@ -99,7 +115,6 @@ void preordtraverse(struct node *root)
 int main()
 {
 	struct node *tree;
-	struct elem *stack;
 
 	tree = addnode(1);
 	tree->l = addnode(2);
@@ -108,10 +123,12 @@ int main()
 	tree->l->r = addnode(5);
 	tree->r->l = addnode(6);
 	tree->r->r = addnode(7);
+	//mainq(tree);	
 
 	//preordtraverse(tree);
 	//inordertraverse(tree);
-	postordertraverse(tree);
+	//postordertraverse(tree);
+	levelordertraverse(tree);
 	//teststack();
 }
 

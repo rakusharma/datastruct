@@ -1,14 +1,5 @@
 #include<stdio.h>
-struct node {
-	void *i;
-	struct node *next;	
-};
-
-struct queue {
-	struct node *q;
-	struct node *f;
-	struct node *r;
-};
+#include"queue.h"
 
 void initq(struct queue **q)
 {
@@ -18,21 +9,28 @@ void initq(struct queue **q)
 	(*q)->r = NULL;
 }
 
-void* denq(struct queue **q)
+int emptyq(struct queue *q)
+{
+	if (q->q == NULL) return 1;
+	return 0;
+}
+
+int *dequ(struct queue **q)
 {
 
-	struct node *t;
+	struct qnode *t;
 
-	t = (*q)->f;
-	(*q)->f = (*q)->f->next;
-	(*q)->q = (*q)->f;
-	return t;
+	t = (*q)->q;
+	(*q)->q = (*q)->q->next;
+	(*q)->f = (*q)->q;
+
+	return t->i;
 }
 void enq(struct queue **q, void **item)
 {
-	struct node *t;
+	struct qnode *t;
 	
-	t = (struct node*)malloc(sizeof(struct node));
+	t = (struct qnode*)malloc(sizeof(struct qnode));
 	t->i = *item;
 	t->next = NULL;
 
@@ -45,24 +43,37 @@ void enq(struct queue **q, void **item)
 	}
 }
 
-void testq()
+#ifdef QUEUE_TEST
+struct testnode {
+	int i;
+	struct testnode *next;
+};
+void mainq()
 {
 	struct queue *q;
-	struct node *t;
-	int i = 1;
+	struct qnode *t;
+	void *x;
+	int i = 1, *p = &i;
+
+	struct testnode *tn, *tp;
+       
+	tn = malloc(sizeof(struct testnode));
+
+	tn->i = 999;
+	tn->next = NULL;
 
 	initq(&q);
 
+	printf("q-> %4p %4p %4p, %4p\n",q->q, q->f,  q->r, tn);
+	enq(&q, &tn);++i;
 	printf("q %4p %4p %4p\n",q->q, q->f,  q->r);
-	enq(&q, &i);++i;
+	enq(&q, &p);++i;
 	printf("q %4p %4p %4p\n",q->q, q->f,  q->r);
-	enq(&q, &i);++i;
+	enq(&q, &p);++i;
 	printf("q %4p %4p %4p\n",q->q, q->f,  q->r);
-	enq(&q, &i);++i;
+	enq(&q, &p);++i;
 	printf("q %4p %4p %4p\n",q->q, q->f,  q->r);
-	enq(&q, &i);++i;
-	printf("q %4p %4p %4p\n",q->q, q->f,  q->r);
-	enq(&q, &i);++i;
+	enq(&q, &p);++i;
 	printf("q %4p %4p %4p\n",q->q, q->f,  q->r);
 
 	t = q->q;
@@ -71,4 +82,15 @@ void testq()
 		t = t->next;
 
 	}
+
+	x = dequ(&q);
+	tp = x;
+
+	printf("deq -> %4p \n", x);
+
 }
+#else
+
+void mainq(){}
+
+#endif
